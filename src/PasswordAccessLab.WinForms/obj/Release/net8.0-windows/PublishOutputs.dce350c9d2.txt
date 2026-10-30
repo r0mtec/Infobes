@@ -1,0 +1,7 @@
+C:\Users\busla\Desktop\Infobes\artifacts\app\PasswordAccessLab.exe
+C:\Users\busla\Desktop\Infobes\artifacts\app\PasswordAccessLab.dll
+C:\Users\busla\Desktop\Infobes\artifacts\app\PasswordAccessLab.deps.json
+C:\Users\busla\Desktop\Infobes\artifacts\app\PasswordAccessLab.runtimeconfig.json
+C:\Users\busla\Desktop\Infobes\artifacts\app\PasswordAccessLab.pdb
+C:\Users\busla\Desktop\Infobes\artifacts\app\PasswordAccessLab.Core.dll
+C:\Users\busla\Desktop\Infobes\artifacts\app\PasswordAccessLab.Core.pdb
