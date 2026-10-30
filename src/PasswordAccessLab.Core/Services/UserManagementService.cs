@@ -22,14 +22,13 @@ public sealed class UserManagementService
         _users = data.Users.Select(user => user with { }).ToList();
     }
 
-    /// <summary>При обязательной смене возвращает профиль, но IsAuthenticated остаётся false.</summary>
+
     public UserAccount? CurrentUser => _sessionUsername is null ? null : FindUser(_sessionUsername);
 
     public bool IsAuthenticated => _sessionComplete && CurrentUser is { IsBlocked: false };
 
     internal TimeProvider Clock => _timeProvider;
 
-    /// <summary>Начальная база создаётся только при отсутствии файла, до обычной авторизации.</summary>
     public static UserDatabase CreateInitialDatabase()
     {
         // У ADMIN нет установленного пароля. Хеш пустой строки позволяет проверить
@@ -88,7 +87,7 @@ public sealed class UserManagementService
         return updatedUser;
     }
 
-    /// <summary>Дополнительная запись при штатном завершении. Снаружи передать данные нельзя.</summary>
+
     public void Save() => _repository.Save(Snapshot(_users));
 
     internal UserAccount? FindUser(string username) => _users.FirstOrDefault(user =>

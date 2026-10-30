@@ -8,7 +8,7 @@ public static class PasswordHashService
     public static string ComputeHash(string password)
     {
         ArgumentNullException.ThrowIfNull(password);
-        // Вариант №2 требует MD5 именно от UTF-8 пароля. В хранилище попадает
+        // В хранилище попадает
         // только шестнадцатеричное представление 16-байтного результата.
         byte[] utf8 = Encoding.UTF8.GetBytes(password);
         byte[]? hash = null;

@@ -70,7 +70,6 @@ public sealed class EncryptedUserRepository : IUserRepository, IDisposable
         }
     }
 
-    /// <summary>Первое создание не заменяет существующий файл даже при гонке.</summary>
     public void Create(UserDatabase data)
     {
         lock (_sync)
@@ -185,8 +184,6 @@ public sealed class EncryptedUserRepository : IUserRepository, IDisposable
                     throw new InvalidDataException("Учетная запись ADMIN не может быть заблокирована.");
             }
         }
-        // ADMIN — обязательная опорная запись лабораторной работы. При ее
-        // отсутствии не создаем новую базу и не допускаем запуск интерфейса.
         if (administrators != 1)
             throw new InvalidDataException("Файл должен содержать ровно одну корректную учетную запись ADMIN.");
     }

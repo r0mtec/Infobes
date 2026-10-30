@@ -21,11 +21,6 @@ public sealed class DesEncryptionService : IDisposable
         byte[]? material = null;
         try
         {
-            // Соль здесь — фиксированная метка контекста, а не случайная величина.
-            // Одна и та же UTF-8 фраза всегда дает одинаковые 40 байт PBKDF2:
-            // первые 8 используются для DES, весь материал — для обработки слабых
-            // ключей. Получение ключа сохранено для чтения ранее созданных баз.
-            // Пароли учетных записей этим алгоритмом НЕ хешируются: для них MD5.
             material = Rfc2898DeriveBytes.Pbkdf2(phraseBytes,
                 "PasswordAccessLab/Variant2/KeyMaterial/v1"u8,
                 KeyIterations, HashAlgorithmName.SHA256, 40);
@@ -82,14 +77,7 @@ public sealed class DesEncryptionService : IDisposable
         if (file.Length < HeaderLength + 8 || !file[..8].SequenceEqual(Magic))
             throw InvalidFile();
         int version = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(8, 4));
-        // Читаем старую версию с 32 служебными байтами после шифротекста.
-        // Этот хвост больше не проверяется; следующее сохранение создаст версию 2.
-        int trailerLength = version switch
-        {
-            1 => LegacyTrailerLength,
-            2 => 0,
-            _ => throw InvalidFile()
-        };
+        int trailerLength = 0;
         int cipherLength = BinaryPrimitives.ReadInt32LittleEndian(file.Slice(20, 4));
         if (cipherLength < 8 || cipherLength % 8 != 0
             || cipherLength > MaximumPlaintextLength + 8
